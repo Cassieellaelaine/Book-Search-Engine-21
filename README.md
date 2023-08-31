@@ -1,6 +1,6 @@
 # Book-Search-Engine-21
 # User Story
-AS AN avid reader
+As an avid reader
 I WANT to search for new books to read
 SO THAT I can keep a list of books to purchase
 
@@ -34,3 +34,5 @@ WHEN I click on the Remove button on a book
 THEN that book is deleted from my saved books list
 WHEN I click on the Logout button
 THEN I am logged out of the site and presented with a menu with the options Search for Books and Login/Signup and an input field to search for books and a submit button  
+![image](https://github.com/Cassieellaelaine/Book-Search-Engine-21/assets/129123349/ccc8cd96-fbc2-479b-bf21-07a7f750d58f)
+
