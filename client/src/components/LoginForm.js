@@ -1,14 +1,16 @@
 // see SignupForm.js for comments
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
 import { Form, Button, Alert } from 'react-bootstrap';
-
-import { loginUser } from '../utils/API';
+import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+
+  const [loginUser, { error }] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -21,32 +23,31 @@ const LoginForm = () => {
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
+      return;
     }
 
     try {
-      const response = await loginUser(userFormData);
+      const { data } = await loginUser({
+        variables: { email: userFormData.email, password: userFormData.password },
+      });
 
-      if (!response.ok) {
-        throw new Error('error!');
-      }
+      const user = data.loginUser; 
 
-      const { token, user } = await response.json();
       console.log(user);
-      Auth.login(token);
+
+      Auth.login(user.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
 
     setUserFormData({
-      username: '',
       email: '',
       password: '',
     });
   };
-
+  
   return (
     <>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>

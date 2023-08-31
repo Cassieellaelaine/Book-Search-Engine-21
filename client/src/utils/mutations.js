@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
   mutation loginUser($email: String!, $password: String!) {
-    createMatchup(email: $email, password: $password) {
+    loginUser(email: $email, password: $password) {
       email
       password
     }
